@@ -1,5 +1,5 @@
-# WireGuard Warp Generator
-To generate a WARP.conf file, you'll have to: <br>
+# WireGuard Cloudflare Warp Generator
+To generate a Cloudflare WARP.conf file, you'll have to: <br>
 - go to https://terminator.aeza.net/en/ <br>
 - choose **debian** and paste in the following command: <br>
 <ins>(Note: use **right click** and then **click paste**, ctrl+v won't work)</ins> <br>
