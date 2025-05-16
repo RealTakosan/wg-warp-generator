@@ -10,4 +10,4 @@ bash <(wget --inet4-only -qO- https://raw.githubusercontent.com/RealTakosan/wg-w
 - copy the link and paste it in the browser <br>
 <ins>(Note: **select text**, use **right click** and then **click copy**, selecting text and pressing ctrl+c won't work)</ins> <br>
 - enjoy and use your WARP.conf in any WireGuard <br>
-<ins>(Note: scan the QR code if you're using the mobile WireGuard)</ins> <br>
+<ins>(Note: **scan** the **QR code** if you're using the **mobile** WireGuard)</ins> <br>
