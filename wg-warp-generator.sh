@@ -2,7 +2,7 @@
 
 clear
 apt update -y && apt install sudo -y
-sudo apt-get update -y --fix-missing && sudo apt-get install wireguard-tools jq wget qrencode -y --fix-missing # Update второй раз, если sudo установлен и обязателен (в строке выше не сработал)
+sudo apt-get update -y --fix-missing && sudo apt-get install wireguard-tools jq wget qrencode -y --fix-missing
 
 priv="${1:-$(wg genkey)}"
 pub="${2:-$(echo "${priv}" | wg pubkey)}"
@@ -12,13 +12,11 @@ sec() { ins "$1" "$2" -H "authorization: Bearer $3" "${@:4}"; }
 response=$(ins POST "reg" -d "{\"install_id\":\"\",\"tos\":\"$(date -u +%FT%T.000Z)\",\"key\":\"${pub}\",\"fcm_token\":\"\",\"type\":\"ios\",\"locale\":\"en_US\"}")
 
 clear
-echo -e "НЕ ИСПОЛЬЗУЙТЕ GOOGLE CLOUD SHELL ДЛЯ ГЕНЕРАЦИИ! Если вы сейчас в Google Cloud Shell, прочитайте актуальный гайд: https://t.me/immalware/1211\n"
 
 id=$(echo "$response" | jq -r '.result.id')
 token=$(echo "$response" | jq -r '.result.token')
 response=$(sec PATCH "reg/${id}" "$token" -d '{"warp_enabled":true}')
 peer_pub=$(echo "$response" | jq -r '.result.config.peers[0].public_key')
-#peer_endpoint=$(echo "$response" | jq -r '.result.config.peers[0].endpoint.host')
 client_ipv4=$(echo "$response" | jq -r '.result.config.interface.addresses.v4')
 client_ipv6=$(echo "$response" | jq -r '.result.config.interface.addresses.v6')
 
@@ -46,14 +44,12 @@ EOM
 )
 
 echo -e "\n\n\n"
-[ -t 1 ] && echo "########## НАЧАЛО КОНФИГА ##########"
+[ -t 1 ] && echo " - BEGINNING OF THE CONFIG - "
 echo "${conf}"
-[ -t 1 ] && echo "########### КОНЕЦ КОНФИГА ###########"
+[ -t 1 ] && echo " - ENDING OF THE CONFIG - "
 
-echo -e "\nОтсканируйте QR код конфигурации с помощью приложения AmneziaWG на смартфон:\n"
+echo -e "\Scan QR for mobile WG:\n"
 echo "$conf" | qrencode -t utf8
 echo -e "\n"
 conf_base64=$(echo -n "${conf}" | base64 -w 0)
-echo "Скачать конфиг файлом: https://immalware.vercel.app/download?filename=WARP.conf&content=${conf_base64}"
-echo -e "\n"
-echo "Что-то не получилось? Есть вопросы? Пишите в чат: https://t.me/immalware_chat"
+echo "DOWNLOAD CONFIG: https://wg-warp-generator.vercel.app/download?filename=WARP.conf&content=${conf_base64}"
