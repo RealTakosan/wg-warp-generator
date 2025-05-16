@@ -1,6 +1,6 @@
 # WireGuard Warp Generator
 To generate a WARP.conf file, you'll have to:
-/n1 - go to https://terminator.aeza.net/en/
+\n 1 - go to https://terminator.aeza.net/en/
 2 - paste in command bash <(wget --inet4-only -qO- https://raw.githubusercontent.com/RealTakosan/wg-warp-generator/main/wg_warp_generator.sh)
 <ins>(Note: use right click and then click paste, ctrl+v won't work)</ins>
 3 - wait for it to generate the WARP.conf installation link
